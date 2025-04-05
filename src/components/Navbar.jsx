@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,17 +15,26 @@ export default function Navbar() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleHomeClick = (e) => {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    setIsOpen(false);
+  };
+
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Education', href: '#education' },
-    { name: 'Contact', href: '#contact' }
+    { name: "Home", href: "#home", onClick: handleHomeClick },
+    { name: "About", href: "#about" },
+    { name: "Projects", href: "#projects" },
+    { name: "Skills", href: "#skills" },
+    { name: "Education", href: "#education" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
@@ -33,25 +42,27 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`navbar ${scrolled ? 'scrolled' : ''}`}
+      className={`navbar ${scrolled ? "scrolled" : ""}`}
     >
       <div className="container">
-        <a href="#home" className="logo">TANIYA</a>
-        
-        <div className={`nav-links ${isOpen ? 'open' : ''}`}>
+        <a href="#home" className="logo" onClick={handleHomeClick}>
+          TANIYA
+        </a>
+
+        <div className={`nav-links ${isOpen ? "open" : ""}`}>
           {navLinks.map((link, index) => (
-            <a 
-              key={index} 
+            <a
+              key={index}
               href={link.href}
-              onClick={() => setIsOpen(false)}
+              onClick={link.onClick || (() => setIsOpen(false))}
               className="nav-link"
             >
               {link.name}
             </a>
           ))}
         </div>
-        
-        <button 
+
+        <button
           className="menu-toggle"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
