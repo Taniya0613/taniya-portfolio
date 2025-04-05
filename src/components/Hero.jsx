@@ -27,7 +27,7 @@ export default function Hero() {
         >
           <TypingText 
             texts={[
-              "Full Stack Developer", 
+              "Web Developer", 
               "AI Enthusiast",
               "Python Programmer",
               "Tech Innovator"
